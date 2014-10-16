@@ -15,14 +15,14 @@ namespace MVCWypozyczalnia.Controllers
 
         public ActionResult About()
         {
-            ViewBag.Message = "Your application description page.";
+            ViewBag.Message = "Strona opisująca firmę / działalność";
 
             return View();
         }
 
         public ActionResult Contact()
         {
-            ViewBag.Message = "Your contact page.";
+            ViewBag.Message = "Strona kontaktowa";
 
             return View();
         }
