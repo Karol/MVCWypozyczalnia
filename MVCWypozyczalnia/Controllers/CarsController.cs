@@ -11,111 +11,107 @@ using MVCWypozyczalnia.Models;
 
 namespace MVCWypozyczalnia.Controllers
 {
-    public class CustomersController : Controller
+    public class CarsController : Controller
     {
         private WypozyczalniaContext db = new WypozyczalniaContext();
 
-        // GET: Customers
+        // GET: Cars
         public ActionResult Index()
         {
-            return View(db.Customer.ToList());
+            return View(db.Car.ToList());
         }
 
-        // GET: Customers/Details/5
+        // GET: Cars/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            CustomerAndAddress customerAndAddress = new CustomerAndAddress();
-            customerAndAddress.CurrentCustomer = db.Customer.Find(id);
-            customerAndAddress.Addresslist = db.Address.ToList().Where(t => t.CustomerID == id);
-
-            if (customerAndAddress == null)
+            Car car = db.Car.Find(id);
+            if (car == null)
             {
                 return HttpNotFound();
             }
-            //return View(customer);
-            return View(customerAndAddress);
+            return View(car);
         }
 
-        // GET: Customers/Create
+        // GET: Cars/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: Customers/Create
+        // POST: Cars/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,Imie,Nazwisko,E_mail,Nr_karty_kredytowej,Telefon,Usuniety")] Customer customer)
+        public ActionResult Create([Bind(Include = "ID,Marka,Model,Rok_produkcji,Przebieg,Usuniety,Wypozyczony")] Car car)
         {
             if (ModelState.IsValid)
             {
-                db.Customer.Add(customer);
+                db.Car.Add(car);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            return View(customer);
+            return View(car);
         }
 
-        // GET: Customers/Edit/5
+        // GET: Cars/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Customer customer = db.Customer.Find(id);
-            if (customer == null)
+            Car car = db.Car.Find(id);
+            if (car == null)
             {
                 return HttpNotFound();
             }
-            return View(customer);
+            return View(car);
         }
 
-        // POST: Customers/Edit/5
+        // POST: Cars/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,Imie,Nazwisko,E_mail,Nr_karty_kredytowej,Telefon,Usuniety")] Customer customer)
+        public ActionResult Edit([Bind(Include = "ID,Marka,Model,Rok_produkcji,Przebieg,Usuniety,Wypozyczony")] Car car)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(customer).State = EntityState.Modified;
+                db.Entry(car).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(customer);
+            return View(car);
         }
 
-        // GET: Customers/Delete/5
+        // GET: Cars/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Customer customer = db.Customer.Find(id);
-            if (customer == null)
+            Car car = db.Car.Find(id);
+            if (car == null)
             {
                 return HttpNotFound();
             }
-            return View(customer);
+            return View(car);
         }
 
-        // POST: Customers/Delete/5
+        // POST: Cars/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Customer customer = db.Customer.Find(id);
-            db.Customer.Remove(customer);
+            Car car = db.Car.Find(id);
+            db.Car.Remove(car);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

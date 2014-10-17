@@ -1,13 +1,13 @@
 ﻿@model IEnumerable<MVCWypozyczalnia.Models.Customer>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Klienci";
 }
 
 <h2>Index</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Dodaj nowego", "Create")
 </p>
 <table class="table">
     <tr>
@@ -20,19 +20,10 @@
         <th>
             @Html.DisplayNameFor(model => model.E_mail)
         </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Nr_karty_kredytowej)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Telefon)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Usuniety)
-        </th>
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
+@foreach (var item in Model.Where(t=> t.Usuniety == false)) {
     <tr>
         <td>
             @Html.DisplayFor(modelItem => item.Imie)
@@ -43,7 +34,7 @@
         <td>
             @Html.DisplayFor(modelItem => item.E_mail)
         </td>
-        <td>
+        @*<td>
             @Html.DisplayFor(modelItem => item.Nr_karty_kredytowej)
         </td>
         <td>
@@ -51,11 +42,11 @@
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Usuniety)
-        </td>
+        </td>*@
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.ID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.ID })
+            @Html.ActionLink("Edytuj", "Edit", new { id=item.ID }) |
+            @Html.ActionLink("Szczegóły", "Details", new { id=item.ID }) |
+            @Html.ActionLink("Usuń", "Delete", new { id=item.ID })
         </td>
     </tr>
 }

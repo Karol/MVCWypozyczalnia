@@ -11,111 +11,116 @@ using MVCWypozyczalnia.Models;
 
 namespace MVCWypozyczalnia.Controllers
 {
-    public class CustomersController : Controller
+    public class RentalsController : Controller
     {
         private WypozyczalniaContext db = new WypozyczalniaContext();
 
-        // GET: Customers
+        // GET: Rentals
         public ActionResult Index()
         {
-            return View(db.Customer.ToList());
+            var rental = db.Rental.Include(r => r.Car).Include(r => r.Customer);
+            return View(rental.ToList());
         }
 
-        // GET: Customers/Details/5
+        // GET: Rentals/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            CustomerAndAddress customerAndAddress = new CustomerAndAddress();
-            customerAndAddress.CurrentCustomer = db.Customer.Find(id);
-            customerAndAddress.Addresslist = db.Address.ToList().Where(t => t.CustomerID == id);
-
-            if (customerAndAddress == null)
+            Rental rental = db.Rental.Find(id);
+            if (rental == null)
             {
                 return HttpNotFound();
             }
-            //return View(customer);
-            return View(customerAndAddress);
+            return View(rental);
         }
 
-        // GET: Customers/Create
+        // GET: Rentals/Create
         public ActionResult Create()
         {
+            ViewBag.carID = new SelectList(db.Car, "ID", "Marka");
+            ViewBag.customerID = new SelectList(db.Customer, "ID", "Imie");
             return View();
         }
 
-        // POST: Customers/Create
+        // POST: Rentals/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,Imie,Nazwisko,E_mail,Nr_karty_kredytowej,Telefon,Usuniety")] Customer customer)
+        public ActionResult Create([Bind(Include = "ID,carID,customerID,Usuniety,Data_wynajmu,Data_zwrotu,Cena")] Rental rental)
         {
             if (ModelState.IsValid)
             {
-                db.Customer.Add(customer);
+                db.Rental.Add(rental);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            return View(customer);
+            ViewBag.carID = new SelectList(db.Car, "ID", "Marka", rental.carID);
+            ViewBag.customerID = new SelectList(db.Customer, "ID", "Imie", rental.customerID);
+            return View(rental);
         }
 
-        // GET: Customers/Edit/5
+        // GET: Rentals/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Customer customer = db.Customer.Find(id);
-            if (customer == null)
+            Rental rental = db.Rental.Find(id);
+            if (rental == null)
             {
                 return HttpNotFound();
             }
-            return View(customer);
+            ViewBag.carID = new SelectList(db.Car, "ID", "Marka", rental.carID);
+            ViewBag.customerID = new SelectList(db.Customer, "ID", "Imie", rental.customerID);
+            return View(rental);
         }
 
-        // POST: Customers/Edit/5
+        // POST: Rentals/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,Imie,Nazwisko,E_mail,Nr_karty_kredytowej,Telefon,Usuniety")] Customer customer)
+        public ActionResult Edit([Bind(Include = "ID,carID,customerID,Usuniety,Data_wynajmu,Data_zwrotu,Cena")] Rental rental)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(customer).State = EntityState.Modified;
+                db.Entry(rental).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(customer);
+            ViewBag.carID = new SelectList(db.Car, "ID", "Marka", rental.carID);
+            ViewBag.customerID = new SelectList(db.Customer, "ID", "Imie", rental.customerID);
+            return View(rental);
         }
 
-        // GET: Customers/Delete/5
+        // GET: Rentals/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Customer customer = db.Customer.Find(id);
-            if (customer == null)
+            Rental rental = db.Rental.Find(id);
+            if (rental == null)
             {
                 return HttpNotFound();
             }
-            return View(customer);
+            return View(rental);
         }
 
-        // POST: Customers/Delete/5
+        // POST: Rentals/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Customer customer = db.Customer.Find(id);
-            db.Customer.Remove(customer);
+            Rental rental = db.Rental.Find(id);
+            db.Rental.Remove(rental);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

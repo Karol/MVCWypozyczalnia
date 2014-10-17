@@ -1,66 +1,92 @@
-﻿@model MVCWypozyczalnia.Models.Customer
+﻿@model MVCWypozyczalnia.Models.CustomerAndAddress
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "Szczegóły";
 }
 
-<h2>Details</h2>
+<h2>Szczegóły</h2>
 
 <div>
-    <h4>Customer</h4>
+    <h4>Klient</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.Imie)
+           Imię
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Imie)
+            @Html.DisplayFor(model => model.CurrentCustomer.Imie)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Nazwisko)
+            @Html.DisplayNameFor(model => model.CurrentCustomer.Nazwisko)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Nazwisko)
+            @Html.DisplayFor(model => model.CurrentCustomer.Nazwisko)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.E_mail)
+            E-mail
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.E_mail)
+            @Html.DisplayFor(model => model.CurrentCustomer.E_mail)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Nr_karty_kredytowej)
+            Karta kredytowa
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Nr_karty_kredytowej)
+            @Html.DisplayFor(model => model.CurrentCustomer.Nr_karty_kredytowej)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Telefon)
+            @Html.DisplayNameFor(model => model.CurrentCustomer.Telefon)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Telefon)
-        </dd>
-
+            @Html.DisplayFor(model => model.CurrentCustomer.Telefon)
+        </dd>  
+        <br />
+        <dt>Adres:  </dt>
+        <dd></dd> 
+        @foreach(var address in Model.Addresslist)
+        { 
+            <br />
         <dt>
-            @Html.DisplayNameFor(model => model.Usuniety)
+            @Html.DisplayNameFor(model => address.Typ)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Usuniety)
+            @Html.DisplayFor(model => address.Typ)
         </dd>
+        <dt>
+            @Html.DisplayNameFor(model => address.Ulica)
+        </dt>
 
-    </dl>
+        <dd>
+            @Html.DisplayFor(model => address.Ulica)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => address.Kod)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => address.Kod)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => address.Miasto)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => address.Miasto)
+        </dd>
+        }    
+        </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Powrót", "Index")  |
+    @Html.ActionLink("Edytuj", "Edit", new { id = Model.CurrentCustomer.ID }) 
 </p>
