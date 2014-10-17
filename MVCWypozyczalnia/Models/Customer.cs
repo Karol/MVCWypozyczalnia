@@ -11,8 +11,8 @@ namespace MVCWypozyczalnia.Models
         public string Imie {get;set;}
         public string Nazwisko {get;set;}
         public string E_mail {get;set;}
-        public int Nr_karty_kredytowej { get; set; }
-        public int Telefon {get;set;}
+        public long Nr_karty_kredytowej { get; set; }
+        public long Telefon {get;set;}
         public bool Usuniety { get; set; }
 
         public virtual ICollection<Address> Address { get; set; }
