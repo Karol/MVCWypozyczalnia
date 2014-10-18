@@ -11,7 +11,7 @@ namespace MVCWypozyczalnia.Models
         public int ID { get; set; }
         public int CustomerID { get; set; }
 
-        [DefaultValue("Zamieszkania")]
+        [DefaultValue("Zameldowania")]
         public string Typ { get; set; }
         public string Ulica { get; set; }
         public string Kod { get; set; }
