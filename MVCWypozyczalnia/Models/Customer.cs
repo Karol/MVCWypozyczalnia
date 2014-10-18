@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
@@ -11,6 +12,8 @@ namespace MVCWypozyczalnia.Models
         public int ID { get; set; }
         public string Imie {get;set;}
         public string Nazwisko {get;set;}
+        [Required(ErrorMessage = "Proszę podać poprawny e-mail")]
+        [RegularExpression(".+\\@.+\\..+", ErrorMessage = "Adres e-mail mósi zawierać znak @ ")]
         public string E_mail {get;set;}
         public long Nr_karty_kredytowej { get; set; }
         public long Telefon {get;set;}

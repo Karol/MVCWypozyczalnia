@@ -59,6 +59,37 @@
         </dd>
 
     </dl>
+    <hr />
+    <h4>Historia wypożyczeń</h4>
+    <table class="table">
+        <tr>
+            <th>
+                Osoba wynajmująca
+            </th>
+            <th>
+               Data wynajęcia
+            </th>
+            <th>
+                Data zwrotu
+            </th>
+            <th></th>
+        </tr>
+        @foreach(var item in Model.Rental.Where(r=>r.carID == Model.ID))
+        {
+        <tr>
+            <th>
+                @item.Customer.Imie @item.Customer.Nazwisko
+            </th>
+            <th>
+                @item.Data_wynajmu.ToString("dd.MM.yyyy")
+            </th>
+            <th>
+                @item.Data_zwrotu.ToString("dd.MM.yyyy")
+            </th>
+            <th></th>
+        </tr>
+        }
+     </table>
 </div>
 <p>
     @Html.ActionLink("Powrót", "Index") |

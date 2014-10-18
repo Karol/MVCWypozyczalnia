@@ -42,12 +42,9 @@ namespace MVCWypozyczalnia.Controllers
             return View();
         }
 
-        // POST: Cars/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,Marka,Model,Rok_produkcji,Przebieg,Usuniety,Wypozyczony")] Car car)
+        public ActionResult Create([Bind(Include = "ID,Marka,Model,Kolor,Rok_produkcji,Przebieg")] Car car)
         {
             if (ModelState.IsValid)
             {
@@ -74,9 +71,6 @@ namespace MVCWypozyczalnia.Controllers
             return View(car);
         }
 
-        // POST: Cars/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "ID,Marka,Model,Rok_produkcji,Przebieg,Kolor,Wypozyczony")] Car car)
@@ -111,7 +105,9 @@ namespace MVCWypozyczalnia.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             Car car = db.Car.Find(id);
-            db.Car.Remove(car);
+            car.Usuniety = true;
+            db.Entry(car).State = EntityState.Modified;
+            //db.Car.Remove(car);
             db.SaveChanges();
             return RedirectToAction("Index");
         }
