@@ -1,13 +1,13 @@
 ﻿@model MVCWypozyczalnia.Models.Car
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "Szczegóły";
 }
 
-<h2>Details</h2>
+<h2>Szczegóły</h2>
 
 <div>
-    <h4>Car</h4>
+    <h4>Samochód</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
@@ -27,7 +27,7 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Rok_produkcji)
+            Rok produkcji
         </dt>
 
         <dd>
@@ -39,15 +39,15 @@
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Przebieg)
+            @Html.DisplayFor(model => model.Przebieg) tys. km
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Usuniety)
+            @Html.DisplayNameFor(model => model.Kolor)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Usuniety)
+            @Html.DisplayFor(model => model.Kolor)
         </dd>
 
         <dt>
@@ -61,6 +61,6 @@
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Powrót", "Index") |
+    @Html.ActionLink("Edytuj", "Edit", new { id = Model.ID })
 </p>

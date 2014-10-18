@@ -18,7 +18,7 @@ namespace MVCWypozyczalnia.Controllers
         // GET: Customers
         public ActionResult Index()
         {
-            return View(db.Customer.ToList());
+            return View(db.Customer.Where(r=>r.Usuniety!=true).ToList());
         }
 
         // GET: Customers/Details/5
@@ -31,7 +31,6 @@ namespace MVCWypozyczalnia.Controllers
             CustomerAndAddress customerAndAddress = new CustomerAndAddress();
             customerAndAddress.CurrentCustomer = db.Customer.Find(id);
             customerAndAddress.Addresslist = db.Address.ToList().Where(t => t.CustomerID == id);
-
             if (customerAndAddress == null)
             {
                 return HttpNotFound();

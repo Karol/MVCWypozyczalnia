@@ -1,13 +1,13 @@
 ﻿@model IEnumerable<MVCWypozyczalnia.Models.Car>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Lista wszystkich samochodów";
 }
 
-<h2>Index</h2>
+<h2>Lista wszystkich samochodów</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Dodaj nowy", "Create")
 </p>
 <table class="table">
     <tr>
@@ -18,16 +18,7 @@
             @Html.DisplayNameFor(model => model.Model)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Rok_produkcji)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Przebieg)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Usuniety)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Wypozyczony)
+            Wypożyczony
         </th>
         <th></th>
     </tr>
@@ -41,21 +32,12 @@
             @Html.DisplayFor(modelItem => item.Model)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Rok_produkcji)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Przebieg)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Usuniety)
-        </td>
-        <td>
             @Html.DisplayFor(modelItem => item.Wypozyczony)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.ID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.ID })
+            @Html.ActionLink("Edytuj", "Edit", new { id=item.ID }) |
+            @Html.ActionLink("Szczegóły", "Details", new { id=item.ID }) |
+            @Html.ActionLink("Usuń", "Delete", new { id=item.ID })
         </td>
     </tr>
 }

@@ -18,7 +18,7 @@ namespace MVCWypozyczalnia.Controllers
         // GET: Cars
         public ActionResult Index()
         {
-            return View(db.Car.ToList());
+            return View(db.Car.Where(r=>r.Usuniety!=true).ToList());
         }
 
         // GET: Cars/Details/5
@@ -79,7 +79,7 @@ namespace MVCWypozyczalnia.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,Marka,Model,Rok_produkcji,Przebieg,Usuniety,Wypozyczony")] Car car)
+        public ActionResult Edit([Bind(Include = "ID,Marka,Model,Rok_produkcji,Przebieg,Kolor,Wypozyczony")] Car car)
         {
             if (ModelState.IsValid)
             {
