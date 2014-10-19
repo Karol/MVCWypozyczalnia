@@ -4,27 +4,32 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+<h2>Historia wszystkich wypożyczeń</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
 <table class="table">
     <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Car.Marka)
-        </th>
+        <th colspan="2" style="text-align:center">Osoba wynajmująca</th>
+        <th colspan="2" style="text-align:center">Samochód</th>
+        <th colspan="3" style="text-align:center">Wynajem</th>
+    </tr>
+    <tr>
         <th>
             @Html.DisplayNameFor(model => model.Customer.Imie)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Usuniety)
+            @Html.DisplayNameFor(model => model.Customer.Nazwisko)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Data_wynajmu)
+            @Html.DisplayNameFor(model => model.Car.Marka)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Data_zwrotu)
+            @Html.DisplayNameFor(model => model.Car.Model)
+        </th>
+        <th>
+            Data wynajmu
+        </th>
+        <th>
+            Data zwrotu
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Cena)
@@ -35,27 +40,25 @@
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.Car.Marka)
-        </td>
-        <td>
             @Html.DisplayFor(modelItem => item.Customer.Imie)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Usuniety)
+            @Html.DisplayFor(modelItem => item.Customer.Nazwisko)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Data_wynajmu)
+            @Html.DisplayFor(modelItem => item.Car.Marka)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Data_zwrotu)
+            @Html.DisplayFor(modelItem => item.Car.Model)
+        </td>
+        <td>
+            @String.Format("{0:dd.MM.yyyy}",item.Data_wynajmu)
+        </td>
+        <td>
+            @String.Format("{0:dd.MM.yyyy}", item.Data_zwrotu)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Cena)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.ID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.ID })
         </td>
     </tr>
 }

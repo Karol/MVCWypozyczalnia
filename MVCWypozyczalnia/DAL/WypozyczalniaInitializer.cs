@@ -30,8 +30,8 @@ namespace MVCWypozyczalnia.DAL
 
             var cars = new List<Car>
             {
-                new Car {Marka="opel", Model="tigra",Przebieg=127,Rok_produkcji=1990,Usuniety=false},
-                new Car {Marka="opel", Model="astra",Przebieg=227,Rok_produkcji=1996,Usuniety=false}
+                new Car {Marka="Opel", Model="TIGRA",Przebieg=127,Rok_produkcji=1999,Usuniety=false,Wypozyczony=false,Kolor="Granatowy"},
+                new Car {Marka="Opel", Model="ASTRA",Przebieg=227,Rok_produkcji=1996,Usuniety=false, Wypozyczony=false,Kolor="Czerwony"}
             };
 
             cars.ForEach(s => context.Car.Add(s));
