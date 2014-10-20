@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using MVCWypozyczalnia.DAL;
 using MVCWypozyczalnia.Models;
+using System.Web.UI.WebControls;
 
 namespace MVCWypozyczalnia.Controllers
 {
@@ -102,7 +103,29 @@ namespace MVCWypozyczalnia.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "ID,Imie,Nazwisko,E_mail,Nr_karty_kredytowej,Telefon,Usuniety")] Customer customer)
         {
-            if (ModelState.IsValid)
+            bool valid = true;
+            foreach (Customer c in db.Customer)
+            {
+                if (c.Nazwisko == customer.Nazwisko && c.Imie == customer.Imie && c.Usuniety == false && c.ID != customer.ID)
+                {
+                    valid = false;
+                    ModelState.Remove("Imie");
+                    customer.Imie = "";
+                    ModelState.Remove("Nazwisko");
+                    customer.Nazwisko = "";
+                    TempData["msg"] = "<script>alert('Taka osoba już istnieje!');</script>";
+                    break;
+                }
+                else if (c.E_mail == customer.E_mail && c.Usuniety == false && c.ID != customer.ID)
+                {
+                    valid = false;
+                    ModelState.Remove("E_mail");
+                    customer.E_mail = "";
+                    TempData["msg"] = "<script>alert('Taki e-mail podał już ktoś inny!');</script>";
+                    break;
+                }
+            }
+            if (ModelState.IsValid && valid)
             {
                 db.Entry(customer).State = EntityState.Modified;
                 db.SaveChanges();
@@ -139,6 +162,46 @@ namespace MVCWypozyczalnia.Controllers
             return RedirectToAction("Index");
         }
 
+        public ActionResult Rental(int? id)
+        {
+            Customer customer = db.Customer.Find(id);
+            Rental rental = new Rental();
+            rental.customerID = customer.ID;
+            ViewBag.ImieNazwisko = customer.Imie + " " + customer.Nazwisko;
+            var carList = db.Car.Where(p => p.Usuniety == false && p.Wypozyczony == false).Select(c =>
+                new SelectListItem
+                {
+                    Value = c.ID.ToString(),
+                    Text = c.Marka + " " + c.Model + " Rok produkcji:" + c.Rok_produkcji.ToString()
+                });
+
+            ModelState.Remove("Data_wynajmu");
+            ModelState.Remove("Data_zwrotu");
+            rental.Data_wynajmu = DateTime.Now;
+            rental.Data_zwrotu = DateTime.Now;
+
+            ViewBag.carID = new SelectList(carList, "Value", "Text");
+            return View(rental);
+        }
+
+        // POST: Customers/Create
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Rental([Bind(Include = "ID,carID,customerID,Usuniety,Data_wynajmu,Data_zwrotu,Cena")] Rental rental)
+        {
+            if (ModelState.IsValid)
+            {
+                rental.Car = db.Car.Find(rental.carID); 
+                rental.Car.Wypozyczony = true;
+                //rental.Customer = db.Customer.Find(rental.customerID);
+                //db.Car.Add(rental.Car);
+                db.Rental.Add(rental);
+                db.SaveChanges();
+                int id = rental.ID;
+                return RedirectToAction("Index");
+            }
+            return View(rental);
+        }
         protected override void Dispose(bool disposing)
         {
             if (disposing)

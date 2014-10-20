@@ -10,7 +10,7 @@
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
+    @Html.Raw(TempData["msg"])
     <div class="form-horizontal">
         <h4>klient</h4>
         <hr />

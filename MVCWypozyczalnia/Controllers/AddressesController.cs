@@ -57,8 +57,20 @@ namespace MVCWypozyczalnia.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "ID,CustomerID,Typ,Ulica,Kod,Miasto")] Address address)
         {
+            bool newOne = true;
+            foreach(Address a in db.Address)
+            {
+                if (a.CustomerID == address.CustomerID && a.Typ == address.Typ)
+                {
+                    newOne = false;
+                    ModelState.Remove("Typ");
+                    address.Typ = "";
+                    TempData["msg"] = "<script>alert('Ta osoba ma dodany taki rodzaj adresu!');</script>";
+                    break;
+                }
+            }
 
-            if (ModelState.IsValid)
+            if (ModelState.IsValid && newOne)
             {
                // address.CustomerID = address.ID;
                 db.Address.Add(address);

@@ -39,8 +39,8 @@ namespace MVCWypozyczalnia.DAL
 
             var rentals = new List<Rental>
             {
-                new Rental{customerID=1, carID=1,Usuniety=false,Cena=1000, Data_wynajmu=DateTime.Parse("2014-01-02"), Data_zwrotu=DateTime.Parse("2014-01-05")},
-                new Rental{customerID=1, carID=2,Usuniety=false,Cena=1000, Data_wynajmu=DateTime.Parse("2014-01-08"), Data_zwrotu=DateTime.Parse("2014-01-10")},
+                new Rental{customerID=1, carID=1,Usuniety=false,Cena=1000, Data_wynajmu=DateTime.Parse("02/02/2014"), Data_zwrotu=DateTime.Parse("05/02/2014")},
+                new Rental{customerID=2, carID=2,Usuniety=false,Cena=1000, Data_wynajmu=DateTime.Parse("05/02/2014"), Data_zwrotu=DateTime.Parse("05/02/2014")},
             };
             rentals.ForEach(s => context.Rental.Add(s));
             context.SaveChanges();
