@@ -50,14 +50,35 @@ namespace MVCWypozyczalnia.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "ID,Imie,Nazwisko,E_mail,Nr_karty_kredytowej,Telefon,Usuniety")] Customer customer)
         {
-            if (ModelState.IsValid)
+            bool newOne = true;
+            foreach(Customer c in db.Customer)
+            {
+                if (c.Nazwisko == customer.Nazwisko && c.Imie == customer.Imie && c.Usuniety==false)
+                {
+                    newOne = false;
+                    ModelState.Remove("Imie");
+                    customer.Imie = "";
+                    ModelState.Remove("Nazwisko");
+                    customer.Nazwisko = "";
+                    TempData["msg"] = "<script>alert('Taka osoba już istnieje!');</script>";
+                    break;
+                }
+                else if (c.E_mail == customer.E_mail && c.Usuniety == false)
+                {
+                    newOne = false;
+                    ModelState.Remove("E_mail");
+                    customer.E_mail = "";
+                    TempData["msg"] = "<script>alert('Taki e-mail podał już ktoś inny!');</script>";
+                    break;
+                }                 
+            }
+            if (ModelState.IsValid && newOne)
             {
                 db.Customer.Add(customer);
                 db.SaveChanges();
                 int id = customer.ID;
                 return RedirectToAction("Create", "Addresses", new { id = id });
             }
-
             return View(customer);
         }
 

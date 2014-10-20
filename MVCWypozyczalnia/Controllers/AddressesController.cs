@@ -45,9 +45,11 @@ namespace MVCWypozyczalnia.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             Customer customer = db.Customer.Find(id);
+            Address address = new Address();
             ViewBag.CustomerID = customer.ID;
+            address.CustomerID = customer.ID;
             ViewBag.CustomerName = customer.Imie + " " + customer.Nazwisko;
-            return View();
+            return View(address);
         }
 
         // POST: Addresses/Create
@@ -55,6 +57,7 @@ namespace MVCWypozyczalnia.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "ID,CustomerID,Typ,Ulica,Kod,Miasto")] Address address)
         {
+
             if (ModelState.IsValid)
             {
                // address.CustomerID = address.ID;
