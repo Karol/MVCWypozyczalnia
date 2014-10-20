@@ -13,8 +13,8 @@ namespace MVCWypozyczalnia.DAL
         {
             var customers = new List<Customer>
             {
-                new Customer{ Imie="Karol",Nazwisko="Korol",Usuniety=false, E_mail="karolkorol@gmail.com",Telefon=48098890098, Nr_karty_kredytowej=0987000009870987},
-                new Customer{ Imie="Baran",Nazwisko="Kowalski",Usuniety=false, E_mail="tetet@gmail.com",Telefon=48036360098, Nr_karty_kredytowej=1111000009870000}
+                new Customer{ Imie="Karol",Nazwisko="Korol",Usuniety=false, E_mail="karolkorol@gmail.com",Telefon="+48098890098", Nr_karty_kredytowej="1987000009870987"},
+                new Customer{ Imie="Baran",Nazwisko="Kowalski",Usuniety=false, E_mail="tetet@gmail.com",Telefon="+48036360098", Nr_karty_kredytowej="1111000009870000"}
             };
             customers.ForEach(s => context.Customer.Add(s));
             context.SaveChanges();

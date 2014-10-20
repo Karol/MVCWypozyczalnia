@@ -15,8 +15,11 @@ namespace MVCWypozyczalnia.Models
         [Required(ErrorMessage = "Proszę podać poprawny e-mail")]
         [RegularExpression(".+\\@.+\\..+", ErrorMessage = "Adres e-mail mósi zawierać znak @ ")]
         public string E_mail {get;set;}
-        public long Nr_karty_kredytowej { get; set; }
-        public long Telefon {get;set;}
+        public string Nr_karty_kredytowej { get; set; }
+
+        [RegularExpression(@"[+]\d{2}[- ]?\d{3}[- ]?\d{3}[- ]?\d{3}", ErrorMessage = "Zły format numeru")]
+        [Required(ErrorMessage="Numer telefonu jest wymagany.")]
+        public string Telefon {get;set;}
         [DefaultValue(true)]
         public bool E_faktura { get; set; }
         public bool Usuniety { get; set; }

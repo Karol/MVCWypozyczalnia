@@ -38,27 +38,31 @@ namespace MVCWypozyczalnia.Controllers
         }
 
         // GET: Addresses/Create
-        public ActionResult Create()
+        public ActionResult Create(int? id)
         {
-            ViewBag.CustomerID = new SelectList(db.Customer, "ID", "Imie");
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Customer customer = db.Customer.Find(id);
+            ViewBag.CustomerID = customer.ID;
+            ViewBag.CustomerName = customer.Imie + " " + customer.Nazwisko;
             return View();
         }
 
         // POST: Addresses/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "ID,CustomerID,Typ,Ulica,Kod,Miasto")] Address address)
         {
             if (ModelState.IsValid)
             {
+               // address.CustomerID = address.ID;
                 db.Address.Add(address);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", "Customers");
             }
 
-            ViewBag.CustomerID = new SelectList(db.Customer, "ID", "Imie", address.CustomerID);
             return View(address);
         }
 
@@ -74,13 +78,11 @@ namespace MVCWypozyczalnia.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.CustomerID = new SelectList(db.Customer, "ID", "Imie", address.CustomerID);
+            ViewBag.CustomerID = address.CustomerID;
             return View(address);
         }
 
         // POST: Addresses/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "ID,CustomerID,Typ,Ulica,Kod,Miasto")] Address address)
@@ -89,9 +91,9 @@ namespace MVCWypozyczalnia.Controllers
             {
                 db.Entry(address).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Details", "Customers", new {id = address.CustomerID });
             }
-            ViewBag.CustomerID = new SelectList(db.Customer, "ID", "Imie", address.CustomerID);
+            //ViewBag.CustomerID = new SelectList(db.Customer, "ID", "Imie", address.CustomerID);
             return View(address);
         }
 

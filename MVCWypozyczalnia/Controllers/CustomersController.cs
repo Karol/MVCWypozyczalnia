@@ -46,8 +46,6 @@ namespace MVCWypozyczalnia.Controllers
         }
 
         // POST: Customers/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "ID,Imie,Nazwisko,E_mail,Nr_karty_kredytowej,Telefon,Usuniety")] Customer customer)
@@ -56,7 +54,8 @@ namespace MVCWypozyczalnia.Controllers
             {
                 db.Customer.Add(customer);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                int id = customer.ID;
+                return RedirectToAction("Create", "Addresses", new { id = id });
             }
 
             return View(customer);
@@ -78,8 +77,6 @@ namespace MVCWypozyczalnia.Controllers
         }
 
         // POST: Customers/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "ID,Imie,Nazwisko,E_mail,Nr_karty_kredytowej,Telefon,Usuniety")] Customer customer)
@@ -114,7 +111,9 @@ namespace MVCWypozyczalnia.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             Customer customer = db.Customer.Find(id);
-            db.Customer.Remove(customer);
+            customer.Usuniety = true;
+            db.Entry(customer).State = EntityState.Modified;
+            //db.Customer.Remove(customer);
             db.SaveChanges();
             return RedirectToAction("Index");
         }
